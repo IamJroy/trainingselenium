@@ -2,6 +2,8 @@ package demoPages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 
 public class checkoutPage {
@@ -20,10 +22,23 @@ public class checkoutPage {
 		}
 	
 	public void checkOut() {
+		
+		WebElement verifyCheckOutButton = driver.findElement(checkOutButton);
+		
+		Assert.assertEquals(true, verifyCheckOutButton.isDisplayed());
 		driver.findElement(checkOutButton).click();
 	}
 	
 	public void inputDetails(String Fname, String Lname, String Postal) {
+		WebElement verifyContinueButton  = driver.findElement(checkOutContinueButton);
+		WebElement verifycheckOutFirstNameInfo = driver.findElement(checkOutFirstNameInfo);
+		WebElement verifycheckOutLastNameInfo = driver.findElement(checkOutLastNameInfo);
+		WebElement verifycheckOutPostalInfo = driver.findElement(checkOutPostalInfo);
+		
+		Assert.assertEquals(true, verifyContinueButton.isDisplayed());
+		Assert.assertEquals(true, verifycheckOutFirstNameInfo.isDisplayed());
+		Assert.assertEquals(true, verifycheckOutLastNameInfo.isDisplayed());
+		Assert.assertEquals(true, verifycheckOutPostalInfo.isDisplayed());
 		
 		driver.findElement(checkOutFirstNameInfo).sendKeys(Fname);
 		driver.findElement(checkOutLastNameInfo).sendKeys(Lname);

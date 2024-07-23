@@ -8,7 +8,6 @@
           <include name="addingItemsToCart"/>
           <include name="checkingOutItems"/>
           <include name="extentSetUpReport"/>
-          <include name="testLogin"/>
         </methods>
       </class> <!-- demoTest.testAppTestNG -->
     </classes>

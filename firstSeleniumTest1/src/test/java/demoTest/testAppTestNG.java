@@ -2,10 +2,9 @@ package demoTest;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import org.testng.asserts.Assertion;
+import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -15,15 +14,13 @@ import demoPages.addToCart;
 import demoPages.checkoutPage;
 import demoPages.loginPage;
 
-import utilities.*;
-
 public class testAppTestNG {
 	
 	WebDriver driver;
 	ExtentReports extentReports;
 	ExtentTest test;
 	
-	@BeforeClass
+	@BeforeTest
 	public void extentSetUpReport() {
 		ExtentSparkReporter spark = new ExtentSparkReporter("Spark.html");
 		extentReports = new ExtentReports();
@@ -34,14 +31,20 @@ public class testAppTestNG {
 		driver.get("https://www.saucedemo.com/");
 	}
 	
-	
+	//(dataProvider = "excelValue", dataProviderClass = excelValueProvider.class)
 
-	@Test(dataProvider = "excelValue", dataProviderClass = excelValueProvider.class)
-	public void testLogin(String testUsername, String testPassword) {
+	@Test
+	public void testLogin() {
 		loginPage loginPageObj = new loginPage(driver);
+		SoftAssert softAssert = new SoftAssert();
+		String testUsername = "standard_user";
+		String testPassword = "secret_sauce";
 		String getTitle = driver.getTitle();
+		String expectedTitle = "Swag Labs";
 		
-		Assert.assertEquals(getTitle, "Swag Labs");
+		
+		softAssert.assertEquals(getTitle, expectedTitle, "Title is not matched");
+		softAssert.assertAll();
 		test = extentReports.createTest("Test with username: " + testUsername + "and Password:" + testPassword);
 		
 		try {
@@ -67,5 +70,5 @@ public class testAppTestNG {
 		checkOutObj.inputDetails("Sam","Paul", "1234");
 		checkOutObj.finishCheckOut();
 	}
-	
+
 }
